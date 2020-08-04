@@ -41,10 +41,10 @@ If the player wins, they gain 1 point. If the computer wins, the player loses on
 Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from The Big Bang Theory](https://www.youtube.com/watch?v=iSHPVCBsnLw).
 
 ## Lin's goal for doing this challenge
-- Experience with theme switching!
 - Practice styled-components 
-- Practice flexbox and css grid 
+- Practice flexbox
 - Build functional components in react 
+- Practice passing data btw components
 - Continue to work on #100DaysOfCode ✅
 - Have fun building! 🚀
 
