@@ -16,16 +16,16 @@ const RockPaperScissorsGame = () =>{
     <GameLayout>
         <Score></Score>
         <GameOptions></GameOptions>
-        <Rules></Rules>
+        {/* <Rules></Rules> */}
     </GameLayout>
   );
 }
 
 const Option = ({option}) => {
   const GameOption = styled.div`
-    // font-size: 5em;
-    // text-stroke: 3px black;
-    .option-wrapper{
+    font-size: 2em;
+
+    .option{
       background: lightblue;
       width: 210px;
       height: 210px;
@@ -33,7 +33,15 @@ const Option = ({option}) => {
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;  
+      cursor: pointer; 
+    }
+
+    .scissors{
+      background-color: #f6f94e;
+    }
+
+    .rock{
+      background-color: pink;
     }
   `;
   function optionClickHandler(event){
@@ -41,8 +49,8 @@ const Option = ({option}) => {
     console.log("clicked", event.target.innerText);
   }
   return(
-    <GameOption className={option} onClick={optionClickHandler}>
-      <div className="option-wrapper">{option}</div>
+    <GameOption className={`${option}-wrapper`} onClick={optionClickHandler}>
+      <div className={`option ${option}`}>{option}</div>
     </GameOption>
   )
 }
@@ -53,8 +61,7 @@ const OptionsLayout = styled.div`
   flex-wrap: wrap;
   margin-top: 60px;
   justify-content: space-between;
-
-  .rock{
+  .rock-wrapper{
     flex-basis: 100%;
     display: flex;
     justify-content: center;
@@ -106,9 +113,12 @@ const Score = () => {
   );
 }
 
+const RuleButton = styled.button`
+  align-self:center;
+`;
 const Rules = () => {
   return(
-    <div>rules</div>
+    <RuleButton>rules</RuleButton>
   );
 }
 function App() {
