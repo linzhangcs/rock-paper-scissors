@@ -50,6 +50,7 @@ Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from
 
 ## Developement Timeline: 
 - 08/03 - setup the project
+- 08/04 - basic layout - score and game options and created components - 2.5 hrs
 
 ## Tools & tech used:
 - react.js
