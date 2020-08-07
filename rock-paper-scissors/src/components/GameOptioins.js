@@ -36,35 +36,24 @@ const OptionsLayout = styled.div`
       justify-content: center;
     }
   `;
-const Option = ({setUserPick, option}) => {
-    
-    function optionClickHandler(event){
-        console.log(event.target);
-        console.log("clicked", event.target.innerText);
-        setUserPick(event.target.innerText);
-    }
+const Option = ({setUserPick, onClick, option}) => {
+
     return(
-        <GameOption className={`${option}-wrapper`} onClick={optionClickHandler}>
+        <GameOption className={`${option}-wrapper`} onClick={(event => onClick(event))}>
         <div className={`option ${option}`}>{option}</div>
         </GameOption>
     )
 }
   
   
-const GameOptions = ({setGameScore, getHousePick}) => {
-    const [userPick, setUserPick] = useState(null);
-
-    console.log("initial", userPick);
-    // const gameOptions = ['🖐', '✌️', '✊'];
-    const gameOptionsText = ['paper', 'scissors', 'rock'];
-    const housePick = getHousePick(gameOptionsText);
-    console.log("housepick", housePick);
-
+const GameOptions = ({onClick, housePick, userPick, gameOptionsText}) => {
     const pickedGameOptions = [userPick, housePick];
-
+    if(userPick !== null){
+        console.log(pickedGameOptions);
+    }
     return(
         <OptionsLayout>
-            {userPick === null && gameOptionsText.map((option) => { return <Option setUserPick={setUserPick} option={option}></Option>})}
+            {userPick === null && gameOptionsText.map((option) => { return <Option onClick={(event) => onClick(event)} option={option}></Option>})}
             {userPick !== null && pickedGameOptions.map(option => { return <Option option={option}></Option>} )}
         </OptionsLayout>
     )

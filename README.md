@@ -49,9 +49,10 @@ Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from
 - Have fun building! 🚀
 
 ## Developement Timeline: 
-- 08/03 - setup the project
+- 08/03 - setup the project - 0.25 hr
 - 08/04 - basic layout - score and game options and created components - 2.5 hrs
-
+- 08/05 - started on passing and updating data and generated random house choice. Having issue with updating score 😅
+- 08/06 - refactor the code logic, move all logic to the RockPaperScissorSGame class - pass clickHandler to options
 ## Tools & tech used:
 - react.js
 - styled-components
