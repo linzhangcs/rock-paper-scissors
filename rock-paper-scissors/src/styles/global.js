@@ -9,6 +9,7 @@ export const options = {
 
 export const colors = {
     white: "#f9f9f9",
+    grey: "#e8e8e8",
     darkText: "hsl(229, 25%, 31%)",
     scoreText: "hsl(229, 64%, 46%)",
     headerOutline: "hsl(217, 16%, 45%)",
