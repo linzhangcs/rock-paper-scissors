@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GameOptions from './components/GameOptioins';
 import Score from './components/Score';
+import {colors} from './styles/global';
+
+import paper from './images/icon-paper.svg';
+import rock from './images/icon-rock.svg';
+import scissors from './images/icon-scissors.svg';
 
 const GameLayout = styled.div`
       box-sizing: border-box;
@@ -9,15 +14,19 @@ const GameLayout = styled.div`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 30px 0; 
+      padding: 30px 0; 
     `;
 
 const RockPaperScissorsGame = () =>{
-    const [gameScore, setGameScore] = useState(0);
+    const [gameScore, setGameScore] = useState(12);
     const [userPick, setUserPick] = useState(null);
     const [housePick, setHousePick] = useState(null);
 
-    const gameOptionsText = ['paper', 'scissors', 'rock'];
+    const gameOptions = [
+      {text: 'paper', bg: paper}, 
+      {text: 'scissors', bg: scissors}, 
+      {text: 'rock', bg: rock}];
+
 
     function generateHousePick(options){
       const randomIndex = Math.floor(Math.random()*(options.length));
@@ -26,9 +35,10 @@ const RockPaperScissorsGame = () =>{
 
     function optionClickHandler(event){
       console.log(event.target);
-      console.log("clicked", event.target.innerText);
-      setHousePick(generateHousePick(gameOptionsText));
-      setUserPick(event.target.innerText);
+      const userOption = event.target.dataset.option;
+      console.log("clicked", userOption);
+      setHousePick(generateHousePick(gameOptions.map(option => option.text)));
+      setUserPick(userOption);
     }
 
     useEffect(() => {
@@ -71,7 +81,7 @@ const RockPaperScissorsGame = () =>{
            onClick= {(event) => optionClickHandler(event)} 
            userPick = {userPick}
            housePick = {housePick}
-           gameOptionsText = {gameOptionsText} ></GameOptions>
+           gameOptions = {gameOptions} ></GameOptions>
           {/* <Rules></Rules> */}
       </GameLayout>
     );

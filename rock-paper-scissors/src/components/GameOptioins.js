@@ -1,26 +1,36 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import {colors, options} from '../styles/global';
+import paper from '../images/icon-paper.svg';
+import rock from '../images/icon-rock.svg';
+import scissors from '../images/icon-scissors.svg';
 
 const GameOption = styled.div`
 font-size: 2em;
 
 .option{
-  background: lightblue;
-  width: 210px;
-  height: 210px;
+  background-color: ${colors.grey};
+  border: 20px solid ${options.paperGradientOne};
+  width: 180px;
+  height: 180px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer; 
+  
+  img{
+      width: 40%;
+
+  }
 }
 
 .scissors{
-  background-color: #f6f94e;
+    border: 20px solid ${options.scissorsGradientOne};
 }
 
 .rock{
-  background-color: pink;
+    border: 20px solid ${options.rockGradientOne};
 }
 `;
 
@@ -36,25 +46,41 @@ const OptionsLayout = styled.div`
       justify-content: center;
     }
   `;
-const Option = ({setUserPick, onClick, option}) => {
 
+const Option = ({onClick, option, bg}) => {
     return(
-        <GameOption className={`${option}-wrapper`} onClick={(event => onClick(event))}>
-        <div className={`option ${option}`}>{option}</div>
+        <GameOption className={`${option}-wrapper`} data-option={option} onClick={(event => onClick(event))}>
+        <div className={`option ${option}`} data-option={option}>
+            <img src={bg} data-option={option}/>
+        </div>
         </GameOption>
     )
 }
   
   
-const GameOptions = ({onClick, housePick, userPick, gameOptionsText}) => {
-    const pickedGameOptions = [userPick, housePick];
+const GameOptions = ({onClick, housePick, userPick, gameOptions}) => {
+    let pickedGameOptions = undefined;
     if(userPick !== null){
-        console.log(pickedGameOptions);
+        const userPickBg = gameOptions.filter(option => option.text === userPick)[0].bg;
+        const housePickBg = gameOptions.filter(option => option.text === housePick)[0].bg;    
+
+        pickedGameOptions= [
+            {
+                text: userPick,
+                bg: userPickBg
+            },{
+                text: housePick,
+                bg: housePickBg
+            }];
+
+            if(userPick !== null){
+            console.log(pickedGameOptions);
+        }
     }
     return(
         <OptionsLayout>
-            {userPick === null && gameOptionsText.map((option) => { return <Option onClick={(event) => onClick(event)} option={option}></Option>})}
-            {userPick !== null && pickedGameOptions.map(option => { return <Option option={option}></Option>} )}
+            {userPick === null && gameOptions.map((option) => { return <Option onClick={(event) => onClick(event)} option={option.text} bg={option.bg}></Option>})}
+            {userPick !== null && pickedGameOptions.map(option => { return <Option option={option.text} bg={option.bg}></Option>} )}
         </OptionsLayout>
     )
 }
