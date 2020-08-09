@@ -50,10 +50,12 @@ Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from
 
 ## Developement Timeline: 
 - 08/03 - setup the project - 0.25 hr
-- 08/04 - basic layout - score and game options and created components - 2.5 hrs
+- 08/04 - basic layout - score and game options and created components - 2 hrs
 - 08/05 - started on passing and updating data and generated random house choice. Having issue with updating score 😅1.5hr
-- 08/06 - refactor the code logic, move all logic to the RockPaperScissorSGame class - pass clickHandler to options - 1hr
-- 08/07 - pass the bg for each game options - 0.5hr
+- 08/06 - refactor the code logic, move all logic to the RockPaperScissorSGame class - pass clickHandler to options - 1.5hr
+- 08/07 - pass the icon for each game options - 0.5hr
+- 08/08 - add layout for the Rule button and Button style class - 0.7hr
+
 ## Tools & tech used:
 - react.js
 - styled-components
