@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import GameOptions from './components/GameOptioins';
 import Score from './components/Score';
 import {colors} from './styles/global';
+import {Button} from './styles/elements';
 
 import paper from './images/icon-paper.svg';
 import rock from './images/icon-rock.svg';
@@ -75,6 +76,7 @@ const RockPaperScissorsGame = () =>{
     }
 
     return (
+      <>
       <GameLayout>
           <Score score = { gameScore }></Score>
           <GameOptions  
@@ -82,19 +84,25 @@ const RockPaperScissorsGame = () =>{
            userPick = {userPick}
            housePick = {housePick}
            gameOptions = {gameOptions} ></GameOptions>
-          {/* <Rules></Rules> */}
       </GameLayout>
+      <Rules></Rules>
+      </>
     );
   }
   
   export default RockPaperScissorsGame;
-  
-  const RuleButton = styled.button`
-    align-self:center;
+
+  const RuleLayout = styled.div`
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
   `;
   const Rules = () => {
     return(
-      <RuleButton>rules</RuleButton>
+      // <Button>play again</Button>
+      <RuleLayout>
+        <Button outline>rules</Button>
+      </RuleLayout>
     );
   }
 
