@@ -55,7 +55,7 @@ Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from
 - 08/06 - refactor the code logic, move all logic to the RockPaperScissorSGame class - pass clickHandler to options - 1.5hr
 - 08/07 - pass the icon for each game options - 0.5hr
 - 08/08 - add layout for the Rule button and Button style class - 0.7hr
-
+- 08/11 - add box-shadow for the options
 ## Tools & tech used:
 - react.js
 - styled-components
