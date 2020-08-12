@@ -1,10 +1,16 @@
 export const options = {
-    scissorsGradientOne: "hsl(39, 89%, 49%)",
+    scissorsGradientOne: "#eba521",
     scissorsGradientTwo: "hsl(40, 84%, 53%)",
-    paperGradientOne: "hsl(230, 89%, 62%)",
+    paperGradientOne: "#5671f6",
     paperGradientTwo: "hsl(230, 89%, 65%)",
-    rockGradientOne: "hsl(349, 71%, 52%)",
-    rockGradientTwo: "(349, 70%, 56%)"
+    rockGradientOne: "#df405e",
+    rockGradientTwo: "hsl(349, 70%, 56%)",
+    greyShadow: "#bbc0d4",
+    paperShadow: "#2945c3",
+    rockShadow: "#9f1536",
+    scissorsShadow: "#c76c1b",
+    backgroundOne: "#f0f0f0",
+    backgroundTwo: "#dbdbdb"
 }
 
 export const colors = {
