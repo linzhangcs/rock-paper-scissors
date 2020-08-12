@@ -9,28 +9,55 @@ const GameOption = styled.div`
 font-size: 2em;
 
 .option{
-  background-color: ${colors.grey};
-  border: 20px solid ${options.paperGradientOne};
-  width: 180px;
-  height: 180px;
+  background: linear-gradient(180deg, ${options.paperGradientOne}, ${options.paperGradientTwo});
+  width: 220px;
+  height: 220px;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer; 
-  
+  box-shadow: 0px 10px ${options.paperShadow};
+  transition: all 800ms ease;
+  .icon-wrapper{
+      width: 80%;
+      height: 80%;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;     
+      background: linear-gradient(0, ${options.backgroundOne}, ${options.backgroundTwo});
+      box-shadow: inset 0px 10px ${options.greyShadow};
+      transition: all 800ms ease;
+
+      &:hover{
+        box-shadow: inset 0px 0px ${options.greyShadow};
+      }
+  }
+  &:hover{
+    box-shadow: 0 1px 10px 10px ${options.paperShadow};
+  }
   img{
       width: 40%;
-
   }
 }
 
 .scissors{
-    border: 20px solid ${options.scissorsGradientOne};
+    background: linear-gradient(180deg, ${options.scissorsGradientOne}, ${options.scissorsGradientTwo});
+    box-shadow: 0px 10px ${options.scissorsShadow};
+    &:hover{
+        box-shadow: 0 1px 10px 8px ${options.scissorsShadow};
+      }
+    
 }
 
 .rock{
-    border: 20px solid ${options.rockGradientOne};
+    background: linear-gradient(180deg, ${options.rockGradientOne}, ${options.rockGradientTwo});
+    box-shadow: 0px 10px ${options.rockShadow};
+    &:hover{
+        box-shadow: 0 1px 10px 8px ${options.rockShadow};
+      }
+    
 }
 `;
 
@@ -51,7 +78,9 @@ const Option = ({onClick, option, bg}) => {
     return(
         <GameOption className={`${option}-wrapper`} data-option={option} onClick={(event => onClick(event))}>
         <div className={`option ${option}`} data-option={option}>
-            <img src={bg} data-option={option}/>
+            <div className="icon-wrapper" data-option={option}>
+                <img src={bg} data-option={option}/>
+            </div>
         </div>
         </GameOption>
     )
