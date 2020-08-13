@@ -15,7 +15,7 @@ const GameLayout = styled.div`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 30px 0; 
+      padding: 46px 0 30px; 
     `;
 
 const RockPaperScissorsGame = () =>{
@@ -24,6 +24,8 @@ const RockPaperScissorsGame = () =>{
     const [housePick, setHousePick] = useState(null);
     const [waitingForHousePick, setWaitingForHousePick] = useState(true);
     const [waitingForScoreUpdate, setWaitingForScoreUpdate] = useState(true);
+    const [waitingForUserPick, setWaitingForUserPick] = useState(true);
+    const WAITINGDURATION = 1000;
 
     const gameOptions = [
       {text: 'paper', bg: paper}, 
@@ -35,32 +37,46 @@ const RockPaperScissorsGame = () =>{
       return options[randomIndex];
     }
 
+    function replayClickHandler(event){
+      // console.log(event.target);
+      //reset Game
+      setUserPick(null);
+      setHousePick(null);
+      setWaitingForUserPick(true);
+      setWaitingForHousePick(true);
+      setWaitingForScoreUpdate(true);
+    }
+
     function optionClickHandler(event){
       console.log(event.target);
       const userOption = event.target.dataset.option;
       console.log("clicked", userOption);
-      setUserPick(userOption);
-      setTimeout(() => {setHousePick(generateHousePick(gameOptions.map(option => option.text)))}, 1000);
+      // setUserPick(userOption);
+      setTimeout(() => setUserPick(userOption), WAITINGDURATION/2);
+      setTimeout(() => {setHousePick(generateHousePick(gameOptions.map(option => option.text)))}, WAITINGDURATION);
     }
-    
+
     useEffect(() => {
       console.log("userPick UPDATED!!!");
       console.log(userPick);
+      setWaitingForUserPick(false);
     }, [userPick]);
 
 
     useEffect(() => {
       console.log("housePicked UPDATED!!!")
       setWaitingForHousePick(false);
-      setTimeout(() => setGameScore(getGameScore(userPick, housePick)), 1000);
+      setTimeout(() => setGameScore(getGameScore(userPick, housePick)), WAITINGDURATION);
       if(housePick === userPick){
-        setTimeout(()=> {console.log("Draw!!!"); setWaitingForScoreUpdate(false)}, 1000);
+        // setTimeout(()=> {console.log("Draw!!!"); setWaitingForScoreUpdate(false)}, WAITINGDURATION);
       }
     }, [housePick]);
 
     useEffect(() => {
       console.log("gameScore UPDATED!!!")
-      setWaitingForScoreUpdate(false);
+      if(gameScore != 12){
+        setTimeout(()=>setWaitingForScoreUpdate(false), 1000);
+      }
     }, [gameScore]);
 
     function getGameScore(userPick, housePick){
@@ -93,15 +109,17 @@ const RockPaperScissorsGame = () =>{
 
     return (
       <>
-      <GameLayout>
-          <Score score = { gameScore }></Score>
-          <GameOptions  
-           onClick= {(event) => optionClickHandler(event)} 
-           userPick = {userPick}
-           housePick = {housePick}
-           gameOptions = {gameOptions} ></GameOptions>
-      </GameLayout>
-      <Rules></Rules>
+        <GameLayout>
+            <Score score = { gameScore }></Score>
+            <GameOptions  
+            onClick= {(event) => optionClickHandler(event)} 
+            userPick = {userPick}
+            housePick = {housePick}
+            loading = {waitingForScoreUpdate}
+            replayClick = {(event) => replayClickHandler(event)}
+            gameOptions = {gameOptions} ></GameOptions>
+        </GameLayout>
+        <Rules></Rules>
       </>
     );
   }
