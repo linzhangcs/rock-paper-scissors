@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {colors, options} from '../styles/global';
 import paper from '../images/icon-paper.svg';
@@ -10,8 +10,9 @@ font-size: 2em;
 
 .option{
   background: linear-gradient(180deg, ${options.paperGradientOne}, ${options.paperGradientTwo});
-  width: 220px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 2em;
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -35,7 +36,7 @@ font-size: 2em;
       }
   }
   &:hover{
-    box-shadow: 0 1px 10px 10px ${options.paperShadow};
+    box-shadow: 0 0 0 32px rgba(80, 80, 80, 0.7);
   }
   img{
       width: 40%;
@@ -45,19 +46,17 @@ font-size: 2em;
 .scissors{
     background: linear-gradient(180deg, ${options.scissorsGradientOne}, ${options.scissorsGradientTwo});
     box-shadow: 0px 10px ${options.scissorsShadow};
-    &:hover{
-        box-shadow: 0 1px 10px 8px ${options.scissorsShadow};
-      }
-    
+    // &:hover{
+    //     box-shadow: 0 1px 10px 8px ${options.scissorsShadow};
+    //   }
 }
 
 .rock{
     background: linear-gradient(180deg, ${options.rockGradientOne}, ${options.rockGradientTwo});
     box-shadow: 0px 10px ${options.rockShadow};
-    &:hover{
-        box-shadow: 0 1px 10px 8px ${options.rockShadow};
-      }
-    
+    // &:hover{
+    //     box-shadow: 0 1px 10px 8px ${options.rockShadow};
+    //   }
 }
 `;
 
@@ -89,9 +88,19 @@ const Option = ({onClick, option, bg}) => {
   
 const GameOptions = ({onClick, housePick, userPick, gameOptions}) => {
     let pickedGameOptions = undefined;
+    console.log('gameoptions', housePick);
+
+    useEffect(() => {
+        console.log("Score UPDATED!!! from options");
+      }, [housePick]);
+
     if(userPick !== null){
+        console.log('gameoptions', housePick);
         const userPickBg = gameOptions.filter(option => option.text === userPick)[0].bg;
-        const housePickBg = gameOptions.filter(option => option.text === housePick)[0].bg;    
+        let housePickBg = housePick === null ? '' : gameOptions.filter(option => option.text === housePick)[0].bg;    
+        // const housePickBg = '';
+
+
 
         pickedGameOptions= [
             {

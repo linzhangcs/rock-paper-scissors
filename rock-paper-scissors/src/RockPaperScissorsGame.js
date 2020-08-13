@@ -38,14 +38,19 @@ const RockPaperScissorsGame = () =>{
       console.log(event.target);
       const userOption = event.target.dataset.option;
       console.log("clicked", userOption);
-      setHousePick(generateHousePick(gameOptions.map(option => option.text)));
       setUserPick(userOption);
+      setTimeout(() => {setHousePick(generateHousePick(gameOptions.map(option => option.text)))}, 1000);
     }
+    useEffect(() => {
+      console.log("userPick UPDATED!!!");
+      console.log(userPick);
+    }, [userPick]);
+
 
     useEffect(() => {
-      console.log("UPDATED!!!")
+      console.log("Score UPDATED!!!")
       setGameScore(getGameScore(userPick, housePick));
-    }, [userPick, housePick]);
+    }, [housePick]);
 
     function getGameScore(userPick, housePick){
       let delta = 0;
