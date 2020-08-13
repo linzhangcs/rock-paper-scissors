@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {colors, options} from '../styles/global';
+import {Button} from '../styles/elements';
 import paper from '../images/icon-paper.svg';
 import rock from '../images/icon-rock.svg';
 import scissors from '../images/icon-scissors.svg';
@@ -10,8 +11,8 @@ font-size: 2em;
 transition: all 800ms ease;
 .option{
   background: linear-gradient(180deg, ${options.paperGradientOne}, ${options.paperGradientTwo});
-  width: 200px;
-  height: 200px;
+  width: 206px;
+  height: 206px;
   margin-bottom: 2em;
   border-radius: 100%;
   display: flex;
@@ -60,6 +61,8 @@ const OptionsLayout = styled.div`
     flex-wrap: wrap;
     margin-top: 60px;
     justify-content: space-between;
+    transition: all 1s ease;
+
     .rock-wrapper{
       flex-basis: 100%;
       display: flex;
@@ -68,16 +71,32 @@ const OptionsLayout = styled.div`
   `;
 
 const OptionsSelectedLayout = styled(OptionsLayout)`
-    margin-top: 100px;
+    width: 680px;
+    text-align: center;
     .rock-wrapper{
         flex-basis: auto;
-        display: flex;
-        justify-content: center;
+        text-align: center;
       }
+    button{
+        margin: 0 auto;
+    }
 `;
 
 const SelectedGameOption = styled(GameOption)`
+    display: flex;
+    flex-direction: column;
+    justify-cotent: flex-start;
+    p{
+        color: ${colors.white};
+        font-size: 0.5em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 60px;
+    }
     .option{
+        text-align: center;
+        width: 280px;
+        height: 280px;
         .icon-wrapper{
             cursor: default;
         }
@@ -95,9 +114,10 @@ const Option = ({onClick, option, bg}) => {
     )
 }
 
- const SelectedOption = ({option, bg}) => {
+ const SelectedOption = ({title, option, bg}) => {
     return(
         <SelectedGameOption className={`${option}-wrapper`} data-option={option}>
+        <p>{title}</p>
         <div className={`option ${option}`} data-option={option}>
             <div className="icon-wrapper" data-option={option}>
                 <img src={bg} data-option={option}/>
@@ -106,7 +126,7 @@ const Option = ({onClick, option, bg}) => {
         </SelectedGameOption>
     )
  }
-const GameOptions = ({onClick, housePick, userPick, gameOptions}) => {
+const GameOptions = ({onClick, housePick, userPick, loading, replayClick, gameOptions}) => {
     let pickedGameOptions = undefined;
     console.log('gameoptions', housePick);
 
@@ -118,12 +138,14 @@ const GameOptions = ({onClick, housePick, userPick, gameOptions}) => {
         console.log('gameoptions', housePick);
         const userPickBg = gameOptions.filter(option => option.text === userPick)[0].bg;
         let housePickBg = housePick === null ? '' : gameOptions.filter(option => option.text === housePick)[0].bg;    
-        
+        console.log("loading", loading);
         pickedGameOptions= [
-            {
+            {   
+                title: "you picked",
                 text: userPick,
                 bg: userPickBg
             },{
+                title: "the house picked",
                 text: housePick,
                 bg: housePickBg
             }];
@@ -141,7 +163,8 @@ const GameOptions = ({onClick, housePick, userPick, gameOptions}) => {
         }else{
             return(
                 <OptionsSelectedLayout>
-                    {pickedGameOptions.map(option => { return <SelectedOption option={option.text} bg={option.bg}></SelectedOption>} )}
+                    {pickedGameOptions.map(option => { return <SelectedOption title={option.title} option={option.text} bg={option.bg}></SelectedOption>} )}
+                    {!loading && <Button onClick={(event) =>replayClick(event)}>play again</Button>}
                 </OptionsSelectedLayout>
             )
         }
