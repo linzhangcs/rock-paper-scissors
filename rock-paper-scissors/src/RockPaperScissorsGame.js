@@ -22,12 +22,13 @@ const RockPaperScissorsGame = () =>{
     const [gameScore, setGameScore] = useState(12);
     const [userPick, setUserPick] = useState(null);
     const [housePick, setHousePick] = useState(null);
+    const [waitingForHousePick, setWaitingForHousePick] = useState(true);
+    const [waitingForScoreUpdate, setWaitingForScoreUpdate] = useState(true);
 
     const gameOptions = [
       {text: 'paper', bg: paper}, 
       {text: 'scissors', bg: scissors}, 
       {text: 'rock', bg: rock}];
-
 
     function generateHousePick(options){
       const randomIndex = Math.floor(Math.random()*(options.length));
@@ -41,6 +42,7 @@ const RockPaperScissorsGame = () =>{
       setUserPick(userOption);
       setTimeout(() => {setHousePick(generateHousePick(gameOptions.map(option => option.text)))}, 1000);
     }
+    
     useEffect(() => {
       console.log("userPick UPDATED!!!");
       console.log(userPick);
@@ -48,9 +50,18 @@ const RockPaperScissorsGame = () =>{
 
 
     useEffect(() => {
-      console.log("Score UPDATED!!!")
-      setGameScore(getGameScore(userPick, housePick));
+      console.log("housePicked UPDATED!!!")
+      setWaitingForHousePick(false);
+      setTimeout(() => setGameScore(getGameScore(userPick, housePick)), 1000);
+      if(housePick === userPick){
+        setTimeout(()=> {console.log("Draw!!!"); setWaitingForScoreUpdate(false)}, 1000);
+      }
     }, [housePick]);
+
+    useEffect(() => {
+      console.log("gameScore UPDATED!!!")
+      setWaitingForScoreUpdate(false);
+    }, [gameScore]);
 
     function getGameScore(userPick, housePick){
       let delta = 0;
