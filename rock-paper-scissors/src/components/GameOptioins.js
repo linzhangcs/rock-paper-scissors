@@ -9,6 +9,7 @@ import scissors from '../images/icon-scissors.svg';
 const GameOption = styled.div`
 font-size: 2em;
 transition: all 800ms ease;
+
 .option{
   background: linear-gradient(180deg, ${options.paperGradientOne}, ${options.paperGradientTwo});
   width: 206px;
@@ -71,12 +72,33 @@ const OptionsLayout = styled.div`
   `;
 
 const OptionsSelectedLayout = styled(OptionsLayout)`
-    width: 680px;
+    width: 1000px;
     text-align: center;
+    align-items: center;
+    .userpick-option{
+        order: 1;
+    }
+
+   .replay-section{
+        order: 2;
+        flex-basis: 300px
+    }
+
+    .housepick-option{
+        order: 3;
+    }
     .rock-wrapper{
         flex-basis: auto;
         text-align: center;
       }
+    
+    p{
+        color: ${colors.white};
+        text-transform: uppercase;
+        font-size: 3em;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
     button{
         margin: 0 auto;
     }
@@ -86,6 +108,8 @@ const SelectedGameOption = styled(GameOption)`
     display: flex;
     flex-direction: column;
     justify-cotent: flex-start;
+    // order: ;
+
     p{
         color: ${colors.white};
         font-size: 0.5em;
@@ -114,9 +138,9 @@ const Option = ({onClick, option, bg}) => {
     )
 }
 
- const SelectedOption = ({title, option, bg}) => {
+ const SelectedOption = ({className, title, option, bg}) => {
     return(
-        <SelectedGameOption className={`${option}-wrapper`} data-option={option}>
+        <SelectedGameOption className={`${option}-wrapper ${className}`} data-option={option}>
         <p>{title}</p>
         <div className={`option ${option}`} data-option={option}>
             <div className="icon-wrapper" data-option={option}>
@@ -126,13 +150,9 @@ const Option = ({onClick, option, bg}) => {
         </SelectedGameOption>
     )
  }
-const GameOptions = ({onClick, housePick, userPick, loading, replayClick, gameOptions}) => {
+const GameOptions = ({onClick, housePick, userPick, loading, replayClick, result, gameOptions}) => {
     let pickedGameOptions = undefined;
     console.log('gameoptions', housePick);
-
-    useEffect(() => {
-        console.log("Score UPDATED!!! from options");
-      }, [housePick]);
 
     if(userPick !== null){
         console.log('gameoptions', housePick);
@@ -142,10 +162,12 @@ const GameOptions = ({onClick, housePick, userPick, loading, replayClick, gameOp
         pickedGameOptions= [
             {   
                 title: "you picked",
+                class: "userpick-option",
                 text: userPick,
                 bg: userPickBg
             },{
                 title: "the house picked",
+                class: "housepick-option",
                 text: housePick,
                 bg: housePickBg
             }];
@@ -163,8 +185,8 @@ const GameOptions = ({onClick, housePick, userPick, loading, replayClick, gameOp
         }else{
             return(
                 <OptionsSelectedLayout>
-                    {pickedGameOptions.map(option => { return <SelectedOption title={option.title} option={option.text} bg={option.bg}></SelectedOption>} )}
-                    {!loading && <Button onClick={(event) =>replayClick(event)}>play again</Button>}
+                    {pickedGameOptions.map((option, index) => <SelectedOption className={option.class} title={option.title} option={option.text} bg={option.bg}></SelectedOption>)}
+                    {!loading && <div className="replay-section"><p>{result}</p><Button onClick={(event) =>replayClick(event)}>play again</Button></div>}
                 </OptionsSelectedLayout>
             )
         }

@@ -55,7 +55,10 @@ Not sure what Rock, Paper, Scissors, Lizard, Spock is? [Check out this clip from
 - 08/06 - refactor the code logic, move all logic to the RockPaperScissorSGame class - pass clickHandler to options - 1.5hr
 - 08/07 - pass the icon for each game options - 0.5hr
 - 08/08 - add layout for the Rule button and Button style class - 0.7hr
-- 08/11 - add box-shadow for the options
+- 08/11 - add box-shadow for the options 0.25hr
+-08/12 - add delay btw house pick, score update and replay btn and add replay btn click handler to reset the game, add conditional display for replay button and its styles, override selected game options's layout - 2hr
+- 08/13 - update the placement for the replay section and detet if the app is mounted. - 1.5hr
+
 ## Tools & tech used:
 - react.js
 - styled-components
