@@ -22,10 +22,12 @@ const RockPaperScissorsGame = () =>{
     const [gameScore, setGameScore] = useState(12);
     const [userPick, setUserPick] = useState(null);
     const [housePick, setHousePick] = useState(null);
+    const [result, setResult] = useState(null);
     const [waitingForHousePick, setWaitingForHousePick] = useState(true);
     const [waitingForScoreUpdate, setWaitingForScoreUpdate] = useState(true);
     const [waitingForUserPick, setWaitingForUserPick] = useState(true);
     const WAITINGDURATION = 1000;
+    const isMounted = useMounted();
 
     const gameOptions = [
       {text: 'paper', bg: paper}, 
@@ -36,9 +38,14 @@ const RockPaperScissorsGame = () =>{
       const randomIndex = Math.floor(Math.random()*(options.length));
       return options[randomIndex];
     }
-
+    function useMounted(){
+      const [isMounted, setIsMounted] = useState(false);
+      useEffect(() => {
+        setIsMounted(true);
+      },[]);
+      return isMounted;
+    }
     function replayClickHandler(event){
-      // console.log(event.target);
       //reset Game
       setUserPick(null);
       setHousePick(null);
@@ -57,29 +64,41 @@ const RockPaperScissorsGame = () =>{
     }
 
     useEffect(() => {
-      console.log("userPick UPDATED!!!");
-      console.log(userPick);
-      setWaitingForUserPick(false);
+      if(isMounted){
+        console.log("userPick UPDATED!!!");
+        console.log(userPick);
+        setWaitingForUserPick(false);
+      }
     }, [userPick]);
 
 
     useEffect(() => {
-      console.log("housePicked UPDATED!!!")
-      setWaitingForHousePick(false);
-      setTimeout(() => setGameScore(getGameScore(userPick, housePick)), WAITINGDURATION);
-      if(housePick === userPick){
-        // setTimeout(()=> {console.log("Draw!!!"); setWaitingForScoreUpdate(false)}, WAITINGDURATION);
+      if(isMounted){
+        console.log("mounted!");
+        console.log("housePicked UPDATED!!!")
+        setWaitingForHousePick(false);
+        setTimeout(() => {
+          setGameScore(getGameScore(userPick, housePick));
+          const delta = getGameScoreDelta(userPick, housePick);
+          if(delta === 0){
+            setResult("draw");
+            setWaitingForScoreUpdate(false);
+          }else{
+            const re = delta > 0 ? "you win" : "you lose";
+            setResult(re);
+          }
+        }, WAITINGDURATION);
       }
     }, [housePick]);
 
     useEffect(() => {
-      console.log("gameScore UPDATED!!!")
-      if(gameScore != 12){
-        setTimeout(()=>setWaitingForScoreUpdate(false), 1000);
+      if(isMounted){
+        console.log("gameScore UPDATED!!!");
+        setTimeout(()=>setWaitingForScoreUpdate(false), 1000);  
       }
     }, [gameScore]);
 
-    function getGameScore(userPick, housePick){
+    function getGameScoreDelta(userPick, housePick){
       let delta = 0;
       switch(userPick){
         case "paper": 
@@ -104,7 +123,11 @@ const RockPaperScissorsGame = () =>{
         }
         break;
       }
-      return gameScore + delta;
+      return delta;
+    }
+
+    function getGameScore(userPick, housePick){
+      return gameScore + getGameScoreDelta(userPick, housePick);
     }
 
     return (
@@ -116,6 +139,7 @@ const RockPaperScissorsGame = () =>{
             userPick = {userPick}
             housePick = {housePick}
             loading = {waitingForScoreUpdate}
+            result = {result}
             replayClick = {(event) => replayClickHandler(event)}
             gameOptions = {gameOptions} ></GameOptions>
         </GameLayout>
