@@ -91,7 +91,37 @@ const OptionsSelectedLayout = styled(OptionsLayout)`
         flex-basis: auto;
         text-align: center;
       }
-    
+    .winning-highlight{
+        position: relative;
+        &:before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, pink 0% 35%, lightblue 35% 50%, var(--dark-green) 50% 90%, black 90% 100%);
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            animation: highlight 1s linear forwards;
+        }
+
+        @keyframes highlight{
+            10%{
+               width: calc(100% + 50px);
+              height: calc(100% + 50px);
+            }
+            50%{
+              width: calc(100% + 150px);
+              height: calc(100% + 150px);
+            }
+            100%{
+              width: calc(100% + 280px);
+             height: calc(100% + 280px);
+            }
+          }
+    }
     p{
         color: ${colors.white};
         text-transform: uppercase;
@@ -138,7 +168,7 @@ const Option = ({onClick, option, bg}) => {
     )
 }
 
- const SelectedOption = ({className, title, option, bg}) => {
+ const SelectedOption = ({className, title, option, bg, result}) => {
     return(
         <SelectedGameOption className={`${option}-wrapper ${className}`} data-option={option}>
         <p>{title}</p>
@@ -185,7 +215,7 @@ const GameOptions = ({onClick, housePick, userPick, loading, replayClick, result
         }else{
             return(
                 <OptionsSelectedLayout>
-                    {pickedGameOptions.map((option, index) => <SelectedOption className={option.class} title={option.title} option={option.text} bg={option.bg}></SelectedOption>)}
+                    {pickedGameOptions.map((option, index) => <SelectedOption className={option.class} title={option.title} option={option.text} bg={option.bg} result={result}></SelectedOption>)}
                     {!loading && <div className="replay-section"><p>{result}</p><Button onClick={(event) =>replayClick(event)}>play again</Button></div>}
                 </OptionsSelectedLayout>
             )
