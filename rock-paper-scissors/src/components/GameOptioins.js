@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {colors, options} from '../styles/global';
 import {Button} from '../styles/elements';
 import paper from '../images/icon-paper.svg';
@@ -70,11 +70,25 @@ const OptionsLayout = styled.div`
       justify-content: center;
     }
   `;
-
+const highlight = keyframes`
+    10%{
+        width: calc(100% + 50px);
+    height: calc(100% + 50px);
+    }
+    50%{
+    width: calc(100% + 150px);
+    height: calc(100% + 150px);
+    }
+    100%{
+    width: calc(100% + 280px);
+    height: calc(100% + 280px);
+    }
+ `;
 const OptionsSelectedLayout = styled(OptionsLayout)`
     width: 1000px;
     text-align: center;
     align-items: center;
+
     .userpick-option{
         order: 1;
     }
@@ -87,41 +101,30 @@ const OptionsSelectedLayout = styled(OptionsLayout)`
     .housepick-option{
         order: 3;
     }
+
     .rock-wrapper{
         flex-basis: auto;
         text-align: center;
       }
+    
     .winning-highlight{
         position: relative;
-        &:before{
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, pink 0% 35%, lightblue 35% 50%, var(--dark-green) 50% 90%, black 90% 100%);
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-            animation: highlight 1s linear forwards;
-        }
-
-        @keyframes highlight{
-            10%{
-               width: calc(100% + 50px);
-              height: calc(100% + 50px);
-            }
-            50%{
-              width: calc(100% + 150px);
-              height: calc(100% + 150px);
-            }
-            100%{
-              width: calc(100% + 280px);
-             height: calc(100% + 280px);
-            }
-          }
+        background-color: grey;
     }
+    .winning-highlight:before{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        background: radial-gradient(circle at center, pink 0% 35%, lightblue 35% 50%, var(--dark-green) 50% 90%, black 90% 100%);
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        transform: translate(-50%, -50%);
+        animation: ${highlight} 1s linear forwards;
+    }
+
     p{
         color: ${colors.white};
         text-transform: uppercase;
@@ -138,7 +141,6 @@ const SelectedGameOption = styled(GameOption)`
     display: flex;
     flex-direction: column;
     justify-cotent: flex-start;
-    // order: ;
 
     p{
         color: ${colors.white};
@@ -169,10 +171,14 @@ const Option = ({onClick, option, bg}) => {
 }
 
  const SelectedOption = ({className, title, option, bg, result}) => {
+     let classNameList = className;
+    if((title === 'you picked' &&  result === 'you win') || (title === 'the house picked' &&  result === 'you lose')) {
+        classNameList += ' winning-highlight';
+    } 
     return(
         <SelectedGameOption className={`${option}-wrapper ${className}`} data-option={option}>
         <p>{title}</p>
-        <div className={`option ${option}`} data-option={option}>
+        <div className={`option ${option} ${classNameList}`} data-option={option}>
             <div className="icon-wrapper" data-option={option}>
                 <img src={bg} data-option={option}/>
             </div>
@@ -189,10 +195,11 @@ const GameOptions = ({onClick, housePick, userPick, loading, replayClick, result
         const userPickBg = gameOptions.filter(option => option.text === userPick)[0].bg;
         let housePickBg = housePick === null ? '' : gameOptions.filter(option => option.text === housePick)[0].bg;    
         console.log("loading", loading);
+
         pickedGameOptions= [
             {   
                 title: "you picked",
-                class: "userpick-option",
+                class: "userpick-options",
                 text: userPick,
                 bg: userPickBg
             },{
