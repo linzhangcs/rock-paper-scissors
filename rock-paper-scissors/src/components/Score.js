@@ -17,9 +17,9 @@ const ScoreContainer = styled.div`
     text-transform: uppercase;
     font-size: 2.5em;
     font-weight: 700;
-    p{
-        margin: -18px;
-    }
+        p{
+            margin: -18px;
+        }
     }
 `;
 

@@ -10,7 +10,10 @@ export const options = {
     rockShadow: "#9f1536",
     scissorsShadow: "#c76c1b",
     backgroundOne: "#f0f0f0",
-    backgroundTwo: "#dbdbdb"
+    backgroundTwo: "#dbdbdb",
+    highlightCenter: "rgba(232, 232, 232, 0.2)",
+    hightlightTransparent:"rgba(232, 232, 232, 0.1)",
+    hightlightEnd: "rgba(232, 232, 232, 0.05)"
 }
 
 export const colors = {
@@ -20,7 +23,8 @@ export const colors = {
     scoreText: "hsl(229, 64%, 46%)",
     headerOutline: "hsl(217, 16%, 45%)",
     backgroundOne: "hsl(214, 47%, 23%)",
-    backgroundTwo: "hsl(237, 49%, 15%)"
+    backgroundTwo: "hsl(237, 49%, 15%)",
+    modalbackground: "rgba(0, 0, 0, 0.50)"
 }
 
 export const breakpoints = {
