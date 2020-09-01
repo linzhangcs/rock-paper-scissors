@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import GameOptions from './components/GameOptioins';
 import Score from './components/Score';
 import {colors} from './styles/global';
@@ -52,6 +52,7 @@ const RockPaperScissorsGame = () =>{
       setWaitingForUserPick(true);
       setWaitingForHousePick(true);
       setWaitingForScoreUpdate(true);
+      
     }
 
     function optionClickHandler(event){
@@ -94,7 +95,7 @@ const RockPaperScissorsGame = () =>{
     useEffect(() => {
       if(isMounted){
         console.log("gameScore UPDATED!!!");
-        setTimeout(()=>setWaitingForScoreUpdate(false), 1000);  
+        setTimeout(()=>setWaitingForScoreUpdate(false), 0);  
       }
     }, [gameScore]);
 
@@ -151,15 +152,34 @@ const RockPaperScissorsGame = () =>{
   export default RockPaperScissorsGame;
 
   const RuleLayout = styled.div`
+    .button-position{
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+    }
+  `;
+  const Modal = styled.div`
+    visibility: ${(props) => props.show};
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: ${colors.modalbackground};
   `;
   const Rules = () => {
+    const [showModal, setShowModal] = useState("hidden");
+
+    function showRulesHandler(event){
+      console.log(event.target);
+      const showHide = showModal === 'hidden' ? 'visible' : 'hidden';
+      setShowModal(showHide);
+    }
     return(
-      // <Button>play again</Button>
       <RuleLayout>
-        <Button outline>rules</Button>
+        <Modal show={showModal} onClick={showRulesHandler}></Modal>
+        <Button outline className="button-position" onClick={showRulesHandler}>rules</Button>
       </RuleLayout>
     );
   }
