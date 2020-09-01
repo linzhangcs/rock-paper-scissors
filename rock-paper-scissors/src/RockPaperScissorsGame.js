@@ -9,6 +9,9 @@ import paper from './images/icon-paper.svg';
 import rock from './images/icon-rock.svg';
 import scissors from './images/icon-scissors.svg';
 
+import rules from './images/image-rules.svg';
+import close from './images/icon-close.svg';
+
 const GameLayout = styled.div`
       box-sizing: border-box;
       display:flex;
@@ -166,7 +169,42 @@ const RockPaperScissorsGame = () =>{
     top: 0;
     left: 0;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: ${colors.modalbackground};
+    .modal-content{
+      width: 400px;
+      height: 416px;
+      box-sizing: border-box;
+      padding: 30px 35px;
+      text-transform: uppercase;
+      border-radius: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      background-color: ${colors.white};
+      color: ${colors.darkText};
+      h3{
+        font-size: 2em;
+        padding: 0;
+        margin: 0;
+      }
+      h3 + img{
+        width: 20px;
+        height: 20px;
+        align-self: center;
+        cursor:pointer;
+      }
+    }
+    .rules{
+      flex-basis: 100%;
+      margin-top: 30px;
+      text-align: center;
+      img{
+        width:90%;
+      }
+    }
   `;
   const Rules = () => {
     const [showModal, setShowModal] = useState("hidden");
@@ -178,7 +216,15 @@ const RockPaperScissorsGame = () =>{
     }
     return(
       <RuleLayout>
-        <Modal show={showModal} onClick={showRulesHandler}></Modal>
+        <Modal show={showModal} onClick={showRulesHandler}>
+          <div className="modal-content">
+            <h3>rules</h3>
+            <img src={close} alt="close modal"/>
+            <div className="rules">
+              <img src={rules} alt="game rules"/>
+            </div>
+          </div>
+        </Modal>
         <Button outline className="button-position" onClick={showRulesHandler}>rules</Button>
       </RuleLayout>
     );
